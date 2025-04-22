@@ -8,33 +8,55 @@ Kleyton Polzonoff
 
 
 
-## Business problem and project objective
+## Project Overview
+This project was conducted in collaboration with Swire Coca-Cola as part of the MSBA Capstone at the University of Utah. The goal was to optimize delivery operations by identifying which customers could be transitioned from Swire’s proprietary red truck fleet to third-party white truck delivery — without compromising future growth potential or customer satisfaction.
 
-To streamline logistics operations, the client needs a structured approach for balancing its in‑house fleet of Red Trucks with alternative delivery methods (ARTM)—partner‑operated vehicles and third‑party White Trucks. Red Trucks strengthen customer relationships and drive revenue; ARTM offers flexibility, though with less direct oversight.
+---
 
-To ensure both high service standards and cost efficiency, we’ll implement precise fleet‑allocation guidelines informed by customer profiles, transaction history, geography, and delivery costs. This framework will leverage customer segmentation to group similar profiles, enabling smarter, data‑driven decisions.
+## Business Problem
+Swire faces high delivery costs serving low-volume customers with its own fleet. While transitioning these customers to white truck (third-party) delivery could save costs, it also risks alienating customers with future growth potential. The challenge was to segment customers in a way that balances cost-efficiency with long-term value.
 
-By applying these insights, we’ll deliver actionable recommendations to optimize fleet distribution and boost overall operational performance.
+---
 
 ## Analytics approach
 
-We began with an open-ended exploration, since there was no predefined roadmap for achieving the project goals. A thorough EDA phase examined transaction trends, engineered new features, and profiled customers to inform our modeling strategy.
+### Business Understanding
+- Defined core objective: reduce logistics costs without sacrificing high-potential customers.
+- Outlined customer types: local market partners, high-frequency buyers, and emerging accounts.
 
-After transforming and aggregating the data into a modeling-ready format, we evaluated a range of methods—classification, regression, time‑series forecasting, and clustering. Ultimately, K‑means clustering emerged as the primary driver of our insights.
+### EDA & Feature Engineering
+- Created behavioral features using the **RFM (Recency, Frequency, Monetary)** framework.
+- Enriched customer profiles using **public census data** (e.g., income, population).
+- Visualized volume trends and delivery cost patterns by segment and region.
 
-We applied clustering to segment customers into three groups, using engineered variables (including an RFM score that captures order recency, frequency, and volume) to define each segment’s characteristics.
+### Modeling & Segmentation
+- Applied **PCA + K-Means clustering** to segment customers into meaningful profiles.
+- Built a **Random Forest model** to validate clusters and extract feature importance.
+- Developed an **ARIMA model** to forecast volume growth by Cold Drink Channel.
+- Created a **Growth Potential Score** based on economic, volume, and frequency signals.
 
-Because clustering is unsupervised, we then trained decision trees and multinomial logistic regression models to “re-predict” cluster assignments. This secondary modeling wasn’t intended for production use, but to identify the key features that distinguish each customer segment.
+### Fleet Assignment Logic
+Developed decision rules based on cluster, volume, and growth attributes:
+- High-volume customers (>1,349 gallons/year) assigned to **Red Trucks**
+- Low-demand customers and Cluster 3 assigned to **White Trucks**
+- Cluster 2 split based on growth indicators and frequency
+
+---
 
 ## Solution and business value
 
-Our framework is transparent, replicable, and easy to follow—offering clear visibility into the fleet‑allocation decision process.
+ **Cost Efficiency:** Confidently reroute true low-volume customers to reduce delivery expenses.  
+ **Customer Retention:** Preserve high-touch service for promising accounts with strong growth signals.  
+ **Scalable Framework:** Fleet assignments now follow clear business rules and scoring logic — ready to scale across markets.  
+ **Strategic Insights:** Provided a deeper understanding of customer profiles based on behavioral and economic patterns.
+
+Our framework is also transparent, replicable, and easy to follow—offering clear visibility into the fleet‑allocation decision process.
 
 By strategically reallocating resources, the company could have saved approximately \$770,000 over the past two years. These savings stem from expanding Red Truck coverage for high‑value customers, optimizing delivery frequency, and reducing overall volume by 3%. This shift enables more efficient asset deployment and ensures key customers receive prioritized service—precisely what the client sought.
 
 We applied this restructuring to just 14% of customers, aligning fleet assignments with shipment profiles and customer attributes to balance efficiency and quality. Post‑implementation, we expect not only continued cost savings but also increased sales, especially among high‑growth accounts.  
 
-## Challenges and opportunities
+## Challenges and Opportunities
 
 A key challenge was the limited two-year historical window, which constrained our ability to evaluate long-term impacts. Wide probability ranges further complicated outcome predictions.
 
@@ -45,3 +67,19 @@ Integrating census data showed promise but underdelivered in this analysis. With
 Forecasting remains complex—even with solid data. Predictions should be presented only when backed by rigorous statistical models and clear confidence intervals; otherwise, it’s better to avoid overreaching conclusions.
 
 Looking ahead, additional testing of fleet-distribution strategies and customer-order behaviors will be crucial for fine-tuning our approach. A more detailed revenue analysis—examining profit margins by customer segment—could further strengthen decision-making. 
+
+---
+
+## Repo Contents
+
+| Folder | Description |
+|--------|-------------|
+| `business_problem_statement/` | Overview of the project objectives and sponsor goals |
+| `eda/` | Exploratory Data Analysis and feature generation |
+| `modeling/` | Modeling scripts for clustering, random forest, and growth scoring |
+| `presentation/` | Final group presentation slides (PDF format) |
+| `README.md` | This file — summary of our group project and value delivered |
+
+---
+
+Thanks to Swire Coca-Cola and our faculty advisors for the opportunity to work on this impactful project!
